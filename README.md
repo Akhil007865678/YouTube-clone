@@ -13,6 +13,8 @@ A simple YouTube clone web application built using React js, Express js, Node js
 - Subscribe: Subscribe to channels and receive updates on new uploads.
 - Liked Videos: View all videos that you have liked in one place.
 - Uploaded Videos: Manage and view all your uploaded videos.
+- Shorts Videos: User can upload and watch shorts videos.
+- Save later: User can store any video in savelater to watch again. 
 
 
 ## Usage
