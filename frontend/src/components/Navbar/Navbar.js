@@ -5,14 +5,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 import { useNavigate } from 'react-router-dom';
-//import PersonIcon from '@mui/icons-material/Person';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Login from '../Login/login';
 import './navbar.css';
 import { jwtDecode } from 'jwt-decode';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import Listening from '../Listening/Listening';
 //import sideNavbar from '../SideNavbar/sideNavbar';
+import axios from 'axios';
 
 const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   const [userId, setuserId] = useState(false);
@@ -24,7 +26,20 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   const [sentences, setSentences] = useState([]);
   const [listeningDuration, setListeningDuration] = useState(6);
   const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/auth/fetchUserData", { withCredentials: true });
+        setUser(response.data);
+        console.log(user.data)
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchUser();
+  }, []);
   useEffect(() => {
     if (typeof InstallTrigger !== 'undefined') {
       console.log("Mozilla Firefox");
@@ -51,7 +66,6 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
       }
     }
   }, []);
-
   const handleClickModal = () => {
     setNavbarModal(prev => !prev);
   }
@@ -60,6 +74,9 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   } 
   const uploadVideo = () => {
     navigate('/23/upload');
+  }
+  const uploadShort = () => {
+    navigate('/uplaodshorts');
   }
   const onClickofPopUpOption = (button) => {
     setNavbarModal(false);
@@ -77,12 +94,10 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   };
   const setLoginModal=() => {
     setLogin(false);
-  }
-  
+  } 
   const navigateToProfile = () => {
     navigate(`/user/${userId}`);
   };
-
   const setListenModel = () => {
     //setListen(false);
   }
@@ -92,10 +107,22 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
     if(button === "login"){
       setLogin(true);
     } else{
-
+      handleLogout();
     }
   }
-
+  const handleLogout = async () => {
+    setNavbarModal(false);
+    try {
+      await axios.post("http://localhost:4000/auth/logout", {}, { withCredentials: true });
+      localStorage.removeItem("token");
+      setUser(null);
+      setuserId(null);
+      navigate("/");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
   useEffect(() => {
     console.log("Transcript Updated:", transcript);
     if (transcript) {
@@ -114,12 +141,10 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
       console.log("Browser does not support speech recognition.");
     }
   };
-  
   const stopListening = () => {
     SpeechRecognition.stopListening();
     console.log("Stopped listening...");
   };
-
   if (!browserSupportsSpeechRecognition) {
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -128,6 +153,7 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
       </div>
     );
   }
+
   return (
     <div className='navbar'>
       <div className='navbar-left'>
@@ -151,15 +177,24 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
         </div>
       </div>
       <div className='navbar-right'>
+          <AddCircleTwoToneIcon onClick={uploadShort} sx={{fontSize: "30px", cursor: "pointer", color: "white"}}/>
           <VideoCallIcon onClick={uploadVideo} sx={{fontSize: "30px", cursor: "pointer", color: "white"}}/>
           <NotificationsActiveIcon sx={{fontSize: "30px", cursor: "pointer", color: "white"}}/>
-          <img onClick={handleClickModal} src={userPic} className='navbar-right-logo' alt='Logo'/>
-
+          {user ? (
+            <img 
+              src={user.data.profilePic} 
+              alt="Profile" 
+              onClick={handleClickModal} 
+              className="profile-img"
+            />
+          ) : (
+            <AccountCircleIcon onClick={handleClickModal} sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} />
+          )}
           { navbarModal &&
             <div className='navbar-modal'>
             <div className='navbar-modal-option' onClick={navigateToProfile}>Profile</div>
             <div className='navbar-modal-option' onClick={() => onClickofPopUpOption("login")}>Login</div>
-            <div className='navbar-modal-option' onClick={() => onClickofPopUpOption("logout")}>Logout</div>
+            <div className='navbar-modal-option' onClick={() => handleLogout()}>Logout</div>
           </div>
           }
       </div>

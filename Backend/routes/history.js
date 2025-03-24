@@ -5,7 +5,7 @@ import Userauth from "../middleware/UserAuth.js";
 
 const router = express.Router();
 
-router.post('/add-history', Userauth, addToHistory);
+router.post('/add-history/:id', Userauth, addToHistory);
 router.get('/fetch-history', Userauth, getHistory);
 
 export default router;

@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import cloudinary from 'cloudinary';
 import Video from '../models/video.js';
 import mongoose from 'mongoose';
+import Shorts from '../models/shorts.js';
 
 
 const cookieOptions = {
@@ -63,9 +64,26 @@ const logout = (req, res) => {
     res.clearCookie('token', cookieOptions).json({message: 'Logged out successfully'});
 };
 
+const fetchUserData = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  const userId = req.user._id;
+  try{
+    const user = await User.findById(userId);
+    res.json({
+      message: 'User data fetched successfully',
+      data: user
+    });
+  } catch(error){
+    res.status(500).json({ error: "Server error"});
+  }
+};
+
+
 const subscribe = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  let video = await Video.findById(id);
   const userId = await User.findById(video.User);
   try {
     const channel = await User.findById(userId);
@@ -108,10 +126,12 @@ const subscriber = async (req, res) => {
 const isSubscribed = async (req, res) => {
   const userId = req.user._id;
   const { id } = req.params;
-  const video = await Video.findById(id);
+  let video = await Video.findById(id);
+  if(!video){
+    video = await Shorts.findById(id);
+  }
   const channel = await User.findById(video.User);
   const channelId = channel._id;
-  console.log(channelId)
   try{
     const user = await User.findById(userId);
     console.log(user.subscription.includes(channelId))
@@ -199,8 +219,84 @@ const subscription = async (req, res) => {
   }
 }
 
+const subscribeShorts = async (req, res) => {
+  const { id } = req.params;
+  let video = await Shorts.findById(id);
+  const userId = await User.findById(video.User);
+  try {
+    const channel = await User.findById(userId);
+    if (!channel) {
+      return res.status(404).json({ error: 'Channel not found' });
+    }
+    channel.subscribersCount += 1;
+    await channel.save();
+    res.status(200).json({
+      message: 'Subscribed successfully',
+      data: { subscribersCount: channel.subscribersCount },
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error', details: error.message });
+  }
+};
+const subscriberShorts = async (req, res) => {
+  const userId = req.user._id;
+  const { id } = req.params;
+  const video = await Shorts.findById(id);
+  const channelId = await User.findById(video.User);
+  try{
+    const user = await User.findById(userId);
+    if (user.subscription.includes(channelId)) {
+      return res.status(400).json({ error: 'User already subscribed' });
+    }
+    user.subscription.push(channelId);
+    user.subscribed += 1;
+    await user.save();
+    res.status(200).json({
+      message: 'Subscribed successfully',
+      data: { subscription: user.subscribed },
+    });
+  } catch(error){
+    res.status(500).json({ error: "Server error"});
+  }
+}
+
+const saveLater = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { id } = req.params;
+    console.log(userId, id)
+    const video = await Video.findById(id);
+    if (!video) return res.status(404).json({ error: "Video not found" });
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    if (user.savedVideos.includes(id)) {
+      return res.status(400).json({ message: "Video already saved" });
+    }
+    user.savedVideos.push(id);
+    await user.save();
+    res.status(200).json({ message: "Video saved successfully", savedVideos: user.savedVideos });
+  } catch (error) {
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+}
+const fetchSavedVideos = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId).populate('savedVideos');
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({ savedVideos: user.savedVideos });
+  } catch (error) {
+    console.error("Error fetching saved videos:", error);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+};
+
 export default {
   signUp, signIn, logout, subscribe, 
   subscriber, isSubscribed, videoLike, 
-  isvideoLiked, likedVideo, subscription
+  isvideoLiked, likedVideo, subscription,
+  subscribeShorts, subscriberShorts, fetchUserData,
+  saveLater, fetchSavedVideos,
 };

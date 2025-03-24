@@ -5,7 +5,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import {useNavigate, useParams, Link} from 'react-router-dom';
 import axios from 'axios';
-
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
 
 const Video = () => {
     const [message, setMessage] = useState("");
@@ -15,7 +15,6 @@ const Video = () => {
     const [Videos, setVideos] = useState("");
     const {id} = useParams();
     const [comments, setComments] = useState([]);
-    //const [isClicked, setClicked] = useState(false);
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isLiked, setIsLIked] = useState(false);
     const navigate = useNavigate();
@@ -33,13 +32,9 @@ const Video = () => {
     
     const addToHistory = async (videoId) => {
         const token = localStorage.getItem('token');
-        if (!token) {
-            console.error('No token found in localStorage');
-            return;
-        }
         try {
             const response = await axios.post(
-                'http://localhost:4000/User-history/add-history',
+                `http://localhost:4000/User-history/add-history/${id}`,
                 { videoId },
                 {
                     headers: {
@@ -69,7 +64,7 @@ const Video = () => {
                 }
             );
             alert('Subscribed successfully');
-            console.log('Updated Subscriber Count:', response.data.data.subscribersCount);
+            window.location.reload();
         } catch (error) {
             console.error('Subscription error:', error.response?.data || error.message);
         }
@@ -218,10 +213,34 @@ const Video = () => {
                     },
                 }
             );
+            window.location.reload();
         } catch (error) {
             console.error('Likes error:', error.response?.data || error.message);
         }
-    }; 
+    };
+    
+    const saveLater = async () => {
+        const userId = getTokenFromCookie();
+        console.log("User ID:", userId, "Video ID:", id);
+        try {
+            const response = await axios.post(
+                `http://localhost:4000/auth/savelater/${id}`,
+                { userId },
+                {  
+                    withCredentials: true,
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${userId}`,
+                    },
+                }
+            );
+            console.log(response)
+            alert('Video saved for watch later');
+        } catch (error) {
+            alert(error.response?.data?.error || "An error occurred");
+        }
+    };
+    
     
     useEffect(() => {
         setData(null);
@@ -266,18 +285,25 @@ const Video = () => {
                     </div>
                     <div disabled={isSubscribed} className={isSubscribed ? 'subscribedBtnYoutube' : 'subscribeBtnYoutube'} onClick={() => { addSubscriber(); addSubscribe();}}>{isSubscribed ? 'Subscribed' : 'Subscribe'}</div>
                 </div>
-                <div className='youtube_video_likeBlock'>
-                    <div className={isLiked ? 'youtube_video_likeBlock_liked' : 'youtube_video_likeBlock_like'} onClick={() => {addLike(); updateLike();}}>
-                        {isLiked ? (
-                          <ThumbUpIcon />
-                        ) : (
-                          <ThumbUpOffAltIcon/>
-                        )}
-                        <div className='youtube_video_likeBlock_No.like'>{data?.like}</div>
+                <div className='youtube_video_event_block'>
+                    <div className='youtube_video_likeBlock'>
+                        <div className={isLiked ? 'youtube_video_likeBlock_liked' : 'youtube_video_likeBlock_like'} onClick={() => {addLike(); updateLike();}}>
+                            {isLiked ? (
+                              <ThumbUpIcon />
+                            ) : (
+                              <ThumbUpOffAltIcon/>
+                            )}
+                            <div className='youtube_video_likeBlock_No.like'>{data?.like}</div>
+                        </div>
+                        <div className='youtubeVideoDivider'></div>
+                        <div className='youtube_video_likeBlock_like' >
+                            <ThumbDownOffAltIcon/>
+                        </div>
                     </div>
-                    <div className='youtubeVideoDivider'></div>
-                    <div className='youtube_video_likeBlock_like' >
-                        <ThumbDownOffAltIcon/>
+                    <div className='youtube_video_likeBlock' onClick={() => saveLater()}>
+                        <div className='youtube_video_likeBlock_like'>
+                            <WatchLaterIcon/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -286,7 +312,7 @@ const Video = () => {
                 <div>{data?.description}</div>
             </div>
             <div className='youtubeCommentSection'>
-                <div className='youtubeCommentSectionTitle'>2 Comment</div>
+                <div className='youtubeCommentSectionTitle'>Comments :</div>
                 <div className='youtubeSelfComment'>
                     <img className='video_youtubeSelfCommentProfile' src='https://imgs.search.brave.com/s7h4GwPFE3nOh8I-uZHXR22kIbzwafCF_Bye8A6B0io/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aXN0b2NrcGhvdG8u/Y29tL3Jlc291cmNl/cy9pbWFnZXMvUGhv/dG9GVExQL0xpZmVz/dHlsZS0xMDMzNDU3/MjUwLmpwZw' alt='....'/>
                     <div className='addComment'>
@@ -309,7 +335,6 @@ const Video = () => {
                         })
                     }
                 </div> }
-
             </div>
         </div>
       </div>

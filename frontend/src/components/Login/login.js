@@ -25,6 +25,7 @@ const Login = ({ setLoginModal }) => {
         setLoginModal()
         document.cookie = `token=${token}; path=/`;
         navigate('/');
+        window.location.reload();
       } else {
         setError("Invalid Credentials");
       }

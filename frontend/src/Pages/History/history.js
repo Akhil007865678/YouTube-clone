@@ -7,15 +7,29 @@ import SideNavbar from '../../components/SideNavbar/sideNavbar';
 const HistoryPage = (sideNavbar) => {
     const [history, setHistory] = useState([]);
 
+    const getTokenFromCookie = () => {
+      const cookies = document.cookie;
+      const cookieArray = cookies.split(';');
+      const tokenCookie = cookieArray.find(cookie => cookie.trim().startsWith('token='));
+      if (tokenCookie) {
+        const token = tokenCookie.split('=')[1];
+        return token;
+      }
+      return null;
+    };
     useEffect(() => {
         const fetchHistory = async () => {
             try {
+              const userId = getTokenFromCookie();
                 const response = await axios.get('http://localhost:4000/User-history/fetch-history', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
+                  withCredentials: true,
+                  headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${userId}`,
+                  },
                 });
-                setHistory(response.data.history);
+                console.log(response.data.video)
+                setHistory(response.data.video);
             } catch (error) {
                 console.log('Failed to fetch history', error);
             }
@@ -28,7 +42,7 @@ const HistoryPage = (sideNavbar) => {
         <SideNavbar sideNavbar={sideNavbar}/>
         <div className={sideNavbar ? 'searchPage' : 'fullHomePage'}>
             <div className="homePage_options">
-              <div className="homePage_option">Welcome to Video Platform</div>
+              <div className="homePage_option">Your history</div>
             </div>
             <div className={sideNavbar ? 'search_mainPage' : 'fullHome_mainPage'}>
                 {history.length > 0 ? (
@@ -36,7 +50,7 @@ const HistoryPage = (sideNavbar) => {
                     <Link key={item._id} to={`/watch/${item._id}`} className="youtube_Video">
                       <div className="youtube_thumbnailBox">
                         <img
-                          src={item?.videoId?.thumbnail}
+                          src={item?.thumbnail}
                           alt="Thumbnail"
                           className="youtube_thumbnailPic"
                         />
@@ -45,15 +59,14 @@ const HistoryPage = (sideNavbar) => {
                       <div className="youtubeTitleBox">
                         <div className="youtubeTitleBoxProfile">
                           <img
-                            src={item?.user?.profilePic}
+                            src={item?.profilePic}
                             alt="Profile"
                             className="youtube_thumbnail_profile"
                           />
                         </div>
                         <div className="youtubeTitleBox_title">
-                          <div className="youtube_videoTitle">{item?.videoId?.title || 'Untitled'}</div>
-                          <div className="youtube_channelName">{item?.user?.channelName || 'Unknown Channel'}</div>
-                          <div className="youtube_videoViews"><p>Watched on: {new Date(item.watchedAt).toLocaleString()}</p></div>
+                          <div className="youtube_videoTitle">{item?.title || 'Untitled'}</div>
+                          <div className="youtube_channelName">{item?.channelName || 'Unknown Channel'}</div>
                         </div>
                       </div>
                     </Link>

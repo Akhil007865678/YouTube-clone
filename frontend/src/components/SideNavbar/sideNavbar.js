@@ -73,10 +73,10 @@ const SideNavbar = ({sideNavbar}) => {
                 <HomeIcon/>
                 <div className='home_sideNavbarTopOptionTitle'>Home</div>
             </Link>
-            <div className={`home_sideNavbarTopOption`}>
+            <Link to={'/shorts'} style={{ textDecoration: 'none', color: 'inherit' }} className={`home_sideNavbarTopOption`}>
                 <VideocamIcon/>
                 <div className='home_sideNavbarTopOptionTitle'>Shorts</div>
-            </div>
+            </Link>
             <div className={`home_sideNavbarTopOption`}>
                 <SubscriptionsIcon/>
                 <div className='home_sideNavbarTopOptionTitle'>Subscriptions</div>
@@ -104,7 +104,7 @@ const SideNavbar = ({sideNavbar}) => {
                 <SmartDisplayIcon/>
                 <div className='home_sideNavbarTopOptionTitle'>Your videos</div>
             </Link>
-            <Link className={`home_sideNavbarTopOption`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={'/save-later'} className={`home_sideNavbarTopOption`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <WatchLaterIcon/>
                 <div className='home_sideNavbarTopOptionTitle'>Watch later</div>
             </Link>

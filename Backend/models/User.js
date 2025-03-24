@@ -31,6 +31,8 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    savedVideos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
+    historyVideos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
     likedVideo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Video' }],
 },{timestamps:true})
 

@@ -12,6 +12,9 @@ import SearchResult from './Pages/Search/Search';
 import Uservideo from './Pages/UserVideo/Uservideo';
 import Videos from './Pages/LikeVideos/videos';
 import SearchBar from './components/Voice/SearchBar';
+import ShortsFeed from './Pages/Shorts/ShortsFeed';
+import ShortsUpload from './Pages/UploadShorts/shortsUpload';
+import SaveLaterPage from './Pages/SaveLater/SaveLaterPage';
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(true);
@@ -26,12 +29,15 @@ function App() {
       <Route path='/watch/:id' element={<Video/>}/>
       <Route path='user/:id' element={<Profile sideNavbar={sideNavbar}/>}/>
       <Route path=':id/upload' element={<VideoUpload/>}/>
+      <Route path='/uplaodshorts' element={<ShortsUpload/>}/>
       <Route path='signup' element={<SignUp/>} />
       <Route path='history' element={<HistoryPage sideNavbar={sideNavbar}/>}/>
+      <Route path='/save-later' element={<SaveLaterPage sideNavbar={sideNavbar}/>}/>
       <Route path='search/:id' element={<SearchResult sideNavbar={sideNavbar}/>}/>
       <Route path='uservideo' element={<Uservideo sideNavbar={sideNavbar}/>}/>
       <Route path='likevideo' element={<Videos sideNavbar={sideNavbar}/>}/>
       <Route path='audio' element={<SearchBar sideNavbar={sideNavbar}/>}/>
+      <Route path='shorts' element={<ShortsFeed/>}/>
     </Routes>
   </BrowserRouter>
   );
