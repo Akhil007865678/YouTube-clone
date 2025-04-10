@@ -33,6 +33,7 @@
     width: 100%;
     display: flex;
     padding: 0 0 20px 0;
+    margin-top: 56px;
 }
 .profile_top_section_profile{
     width: 15%;
@@ -105,4 +106,68 @@
 }
 .child_section{
     margin-right: 80px;
+}
+
+
+@media (max-width: 576px){
+    .profile_top_section{
+        width: 100%;
+        display: flex;
+        padding: 0 0 20px 0;
+        margin-top: 50px;
+    }
+    .profile_top_section_profile{
+        width: 25%;
+        height: 40%;
+    }
+    .profile_top_section_img{
+        width: 100%;
+        border-radius: 50%;
+        height: 90%;
+    }
+    .profile_top_section_about{
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        width: 85%;
+    }
+    .profile_top_section_about_name{
+        font-size: 36px;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        padding-left: 0px;
+    }
+    .profile_right_section{
+        font-size: initial;
+        margin-left: 1%;
+        display: flex;
+    }
+    .child_section{
+        margin-left: 0px;
+    }
+    .profileVideos{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: 100vh;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    .fullHomePage2{
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        flex: 1;
+        min-height: 100vh;
+    }
+    .homePage2{
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        flex: 1;
+        margin-left: 262px;
+        min-height: 100vh;
+    }
+    
 }

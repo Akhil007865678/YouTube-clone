@@ -55,7 +55,7 @@ const Profile = ({ sideNavbar }) => {
                 </div>
                 <div className='child_section'>
                   <h3 className='subscriber'>Likes</h3>
-                  <h4 className='subscriberNumber'>{}hello</h4>
+                  <h4 className='subscriberNumber'>?</h4>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ const Profile = ({ sideNavbar }) => {
             Videos &nbsp; <ArrowRightIcon />
           </div>
           <div className="profileVideos">
-            <div className={sideNavbar ? 'home_mainPage' : 'fullHome_mainPage'}>
+            <div className={sideNavbar ? 'home_mainPage2' : 'fullHome_mainPage2'}>
                 {error ? (
                     <div className="errorMessage">{error}</div>
                 ) : videos.length > 0 ? (

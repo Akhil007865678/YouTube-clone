@@ -54,7 +54,7 @@ const VideoUpload = () => {
     return (
         <div>
             <div className='videoUpload'>
-                <div className='uploadBox'>
+                <div className='uploadBox1'>
                     <div className='uploadVideoTitle'>
                         <YouTubeIcon sx={{ fontSize: "54px", color: "red" }} />
                         Upload Video

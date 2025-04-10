@@ -39,11 +39,11 @@ const LikedVideo = ({ sideNavbar }) => {
   }, []);
 
   return (
-    <div className={sideNavbar ? 'searchPage' : 'fullHomePage'}>
+    <div className={sideNavbar ? 'searchPage' : 'fullHomePage1'}>
       <div className="homePage_options">
         <div className="homePage_option">Liked Videos</div>
       </div>
-      <div className={sideNavbar ? 'home_mainPage' : 'fullHome_mainPage'}>
+      <div className={sideNavbar ? 'home_mainPage1' : 'fullHome_mainPage1'}>
               {videos.length > 0 ? (
                 videos.map((video) => (
                   <Link key={video._id} to={`/watch/${video._id}`} className="youtube_Video">
@@ -66,7 +66,6 @@ const LikedVideo = ({ sideNavbar }) => {
                       <div className="youtubeTitleBox_title">
                         <div className="youtube_videoTitle">{video?.title || 'Untitled'}</div>
                         <div className="youtube_channelName">{video?.user?.channelName || 'Unknown Channel'}</div>
-                        <div className="youtube_videoViews">{video?.like || 0} likes</div>
                       </div>
                     </div>
                   </Link>

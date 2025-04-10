@@ -59,7 +59,7 @@
     font-size: 14px;
     color: #AAAAAA;
 }
-.subscribeBtnYoutube{
+.subscribeBtnYoutube1{
     background-color: white;
     color: black;
     padding: 0px 16px;
@@ -72,7 +72,7 @@
     cursor: pointer;
     font-size: 14px;
 }
-.subscribedBtnYoutube{
+.subscribedBtnYoutube1{
     background-color: rgb(244, 107, 107);
     cursor: not-allowed;
     pointer-events: none;
@@ -187,7 +187,9 @@
 .youtube_video_event_block{
     display: flex;
 }
-
+.youtubeOtherComment1{
+    display: none;
+}
 
 
 
@@ -226,4 +228,88 @@
 .video_suggestion_about_profile{
     color: #ffffff9c;
     font-size: 12px;
+}
+.showcomments{
+    display: none;
+}
+
+
+@media (max-width: 576px){
+    .video{
+        margin-top: 56px;
+        display: flex;
+        flex-direction: column;
+        padding: 30px 0;
+        justify-content: center;
+        background-color: black;
+        color: white;
+    }
+    .video_youtube_video{
+        width: 100%;
+        border-radius: 10px;
+        height: 280px;
+    }
+    .youtube_video_ProfileBlock_left{
+        display: flex;
+        gap: 15px;
+    }
+    .youtubePostProfileSubs{
+        display: none;
+    }
+    .subscribeBtnYoutube1{
+        background-color: white;
+        color: black;
+        padding: 0px 16px;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 36px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 10px;
+    }
+    .subscribedBtnYoutube1{
+        background-color: rgb(244, 107, 107);
+        cursor: not-allowed;
+        pointer-events: none;
+        color: white;
+        padding: 0px 16px;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 36px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 10px;
+    }
+    .youtube_video_likeBlock{
+        display: flex;
+        gap: 10px;
+        background-color: #a5a5a538;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 10px;
+        box-sizing: border-box;
+        border-radius: 18px;
+        cursor: pointer;
+    }
+    .youtube_video_likeBlock_like{
+        display: flex;
+        gap: 5px;
+    }
+    .youtube_video_likeBlock_liked{
+        display: flex;
+        gap: 5px;
+    }
+    .youtube_video_likeBlock_No.like{
+        font-weight: 500;
+    }
+    .showcomments{
+        display: block;
+    }
+    .youtubeOtherComment{
+        display: none;
+    }
 }

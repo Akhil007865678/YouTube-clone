@@ -82,3 +82,17 @@
         color: black;
     }
 }
+
+@media (max-width: 576px){
+    .signup_card{
+        width: 80%;
+        border: 1px solid;
+        padding: 15px 25px;
+        margin-top: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0.5px 0.5px 8px white;
+    }
+}

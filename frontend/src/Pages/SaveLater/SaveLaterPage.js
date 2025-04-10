@@ -43,11 +43,11 @@ const SaveLaterPage = (sideNavbar) => {
     return (
         <>
         <SideNavbar sideNavbar={sideNavbar}/>
-        <div className={sideNavbar ? 'searchPage' : 'fullHomePage'}>
+        <div className={sideNavbar ? 'searchPage3' : 'fullHomePage3'}>
             <div className="homePage_options">
               <div className="homePage_option">Your Saved video</div>
             </div>
-            <div className={sideNavbar ? 'search_mainPage' : 'fullHome_mainPage'}>
+            <div className={sideNavbar ? 'search_mainPage3' : 'fullHome_mainPage3'}>
                 {videos.length > 0 ? (
                   videos.map((item) => (
                     <Link key={item._id} to={`/watch/${item._id}`} className="youtube_Video">

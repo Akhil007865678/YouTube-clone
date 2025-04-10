@@ -18,7 +18,7 @@ import axios from 'axios';
 const SideNavbar = ({sideNavbar}) => {
     const [userId, setuserId] = useState('');
     const [channel, setChannel] = useState([]);
-    
+ 
     useEffect(() => {
       if (typeof InstallTrigger !== 'undefined') {
         console.log("Mozilla Firefox");
@@ -46,7 +46,6 @@ const SideNavbar = ({sideNavbar}) => {
       }
     }, []);
   
-
     useEffect(() => {
         const subscription = async () => {
           try {

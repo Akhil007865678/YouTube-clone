@@ -8,6 +8,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ExploreIcon from '@mui/icons-material/Explore';
 import Login from '../Login/login';
 import './navbar.css';
 import { jwtDecode } from 'jwt-decode';
@@ -22,11 +23,32 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   const [query, setQuery] = useState("");
   const [userPic, setUserPic] = useState("https://www.istockphoto.com/photos/unknown-user");
   const [navbarModal, setNavbarModal] = useState(false);
+  const [navbarModal1, setNavbarModal1] = useState(false);
   const [login, setLogin] = useState(false);
   const [sentences, setSentences] = useState([]);
   const [listeningDuration, setListeningDuration] = useState(6);
   const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition();
   const [user, setUser] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+      const handleResize = () => {
+          setIsMobile(window.innerWidth <= 768);
+      };
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+        if (window.innerWidth <= 768) {
+            setSideNavbarFun(false);
+        }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -69,6 +91,9 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   const handleClickModal = () => {
     setNavbarModal(prev => !prev);
   }
+  const handleClickModal1 = () => {
+    setNavbarModal1(prev => !prev);
+  }
   const sideNavbarFun = () => {
       setSideNavbarFun(!sideNavbar);
   } 
@@ -84,6 +109,24 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
       setLogin(true);
     } else{
 
+    }
+  }
+  const handleClickModal2 = (value) => {
+    setNavbarModal1(false);
+    if(value === "shorts"){
+      navigate('/shorts');
+    } else if(value === "History"){
+      navigate('/history');
+    } else if(value === "uservideo"){
+      navigate('/uservideo');
+    } else if(value === "Liked videos"){
+      navigate('/likevideo');
+    } else if(value === "save-later"){
+      navigate('/save-later');
+    } else if(value === 'Upload Video'){
+      navigate('/23/upload');
+    } else if(value === 'Upload Shorts'){
+      navigate('/uplaodshorts');
     }
   }
   const onSearch = (e) => {
@@ -157,6 +200,9 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   return (
     <div className='navbar'>
       <div className='navbar-left'>
+        <div className='navbarHamberger1' onClick={handleClickModal1}>
+            <ExploreIcon sx={{color: "white"}}/>
+        </div>
         <div className='navbarHamberger' onClick={sideNavbarFun}>
             <Menu sx={{color: "white"}}/>
         </div>
@@ -177,9 +223,13 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
         </div>
       </div>
       <div className='navbar-right'>
-          <AddCircleTwoToneIcon onClick={uploadShort} sx={{fontSize: "30px", cursor: "pointer", color: "white"}}/>
-          <VideoCallIcon onClick={uploadVideo} sx={{fontSize: "30px", cursor: "pointer", color: "white"}}/>
-          <NotificationsActiveIcon sx={{fontSize: "30px", cursor: "pointer", color: "white"}}/>
+          {!isMobile && (
+            <>
+              <AddCircleTwoToneIcon onClick={uploadShort} sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} />
+              <VideoCallIcon onClick={uploadVideo} sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} />
+              <NotificationsActiveIcon sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} />
+            </>
+          )}
           {user ? (
             <img 
               src={user.data.profilePic} 
@@ -195,6 +245,18 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
             <div className='navbar-modal-option' onClick={navigateToProfile}>Profile</div>
             <div className='navbar-modal-option' onClick={() => onClickofPopUpOption("login")}>Login</div>
             <div className='navbar-modal-option' onClick={() => handleLogout()}>Logout</div>
+          </div>
+          }
+          { navbarModal1 &&
+          <div className='navbar-modal1'>
+            <div onClick={() => handleClickModal2('shorts')} className='navbar-modal-option'>Shorts</div>
+            <div onClick={() => handleClickModal2('')} className='navbar-modal-option'>Subscriptions</div>
+            <div onClick={() => handleClickModal2('History')} className='navbar-modal-option'>History</div>
+            <div onClick={() => handleClickModal2('uservideo')} className='navbar-modal-option'>Your videos</div>
+            <div onClick={() => handleClickModal2('Liked videos')} className='navbar-modal-option'>Liked videos</div>
+            <div onClick={() => handleClickModal2('save-later')} className='navbar-modal-option'>watch later</div>
+            <div onClick={() => handleClickModal2('Upload Video')} className='navbar-modal-option'>Upload Video</div>
+            <div onClick={() => handleClickModal2('Upload Shorts')} className='navbar-modal-option'>Upload Shorts</div>
           </div>
           }
       </div>

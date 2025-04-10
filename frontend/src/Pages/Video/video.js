@@ -6,6 +6,7 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import {useNavigate, useParams, Link} from 'react-router-dom';
 import axios from 'axios';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const Video = () => {
     const [message, setMessage] = useState("");
@@ -18,6 +19,11 @@ const Video = () => {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isLiked, setIsLIked] = useState(false);
     const navigate = useNavigate();
+    const [showComments, setShowComments] = useState(false);
+
+    const handleToggleComments = () => {
+      setShowComments(prev => !prev);
+    };
 
     const getTokenFromCookie = () => {
         const cookies = document.cookie;
@@ -241,7 +247,6 @@ const Video = () => {
         }
     };
     
-    
     useEffect(() => {
         setData(null);
         setUser(null);
@@ -283,7 +288,7 @@ const Video = () => {
                         <div className='youtubePostProfileName'>{user?.userName}</div>
                         <div className='youtubePostProfileSubs'>{user?.createdAt.slice(0,10)}</div>
                     </div>
-                    <div disabled={isSubscribed} className={isSubscribed ? 'subscribedBtnYoutube' : 'subscribeBtnYoutube'} onClick={() => { addSubscriber(); addSubscribe();}}>{isSubscribed ? 'Subscribed' : 'Subscribe'}</div>
+                    <div disabled={isSubscribed} className={isSubscribed ? 'subscribedBtnYoutube1' : 'subscribeBtnYoutube1'} onClick={() => { addSubscriber(); addSubscribe();}}>{isSubscribed ? 'Subscribed' : 'Subscribe'}</div>
                 </div>
                 <div className='youtube_video_event_block'>
                     <div className='youtube_video_likeBlock'>
@@ -323,6 +328,22 @@ const Video = () => {
                         </div>
                     </div>
                 </div>
+                <div className='showcomments' onClick={handleToggleComments}>Comments <ArrowDropDownIcon/></div>
+                {showComments && (
+                  <div className='youtubeOtherComment1'>
+                  {
+                      comments.map((item, index) => {
+                          return (
+                              <div className='youtubeSelfComment'>
+                                  <img className='video_youtubeSelfCommetnProfile' src={item.user} alt='loading...'/>
+                                  <p>{item.message}</p>
+                              </div>
+                          );
+                      })
+                  }
+                  </div>
+                )}
+
                 { <div className='youtubeOtherComment'>
                     {
                         comments.map((item, index) => {

@@ -40,11 +40,11 @@ const HistoryPage = (sideNavbar) => {
     return (
         <>
         <SideNavbar sideNavbar={sideNavbar}/>
-        <div className={sideNavbar ? 'searchPage' : 'fullHomePage'}>
+        <div className={sideNavbar ? 'home_mainPage3' : 'fullHomePage3'}>
             <div className="homePage_options">
               <div className="homePage_option">Your history</div>
             </div>
-            <div className={sideNavbar ? 'search_mainPage' : 'fullHome_mainPage'}>
+            <div className={sideNavbar ? 'search_mainPage3' : 'fullHome_mainPage3'}>
                 {history.length > 0 ? (
                   history.map((item) => (
                     <Link key={item._id} to={`/watch/${item._id}`} className="youtube_Video">

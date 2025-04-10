@@ -64,3 +64,15 @@
         color: black;
     }
 }
+
+
+
+@media (max-width: 576px){
+    .uploadBox{
+        width: 80%;
+        border-radius: 5px;
+        margin-top: 20px;
+        box-shadow: 0.5px 0.5px 8px white;
+        padding: 25px;
+    }
+}
