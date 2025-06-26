@@ -61,13 +61,14 @@ const ShortsUpload = () => {
         formData.append('video', video);
         
         try {
-            const response = await axios.post('http://localhost:4000/api/shortsupload', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/shortsupload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,
             });
             setMessage(response.data.message);
+            alert("Shorts uploaded successfully");
         } catch (error) {
             setMessage('Error uploading video');
             console.error('Error uploading video:', error);

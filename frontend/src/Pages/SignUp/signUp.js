@@ -37,7 +37,7 @@ const SignUp = () => {
 
         try {
             setProgressBar(true);
-            const response = await axios.post('http://localhost:4000/auth/signup', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },

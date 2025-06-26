@@ -28,7 +28,7 @@ const ShortsFeed = () => {
   }; 
   const updateShortsLike = async (videoId) => {
     try {
-      await axios.patch(`http://localhost:4000/api/shortlikes/${videoId}`);
+      await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/shortlikes/${videoId}`);
     } catch (error) {
       console.error("Likes error:", error.response?.data || error.message);
     }
@@ -39,7 +39,7 @@ const ShortsFeed = () => {
         try {
             const userId = getTokenFromCookie();
             const response = await axios.get(
-                `http://localhost:4000/auth/isliked/${currentVideoId}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/isliked/${currentVideoId}`,
                 {
                     withCredentials: true,
                     headers: {
@@ -59,7 +59,7 @@ const ShortsFeed = () => {
   const addLike = async (videoId) => {
             try {
                 await axios.patch(
-                    `http://localhost:4000/auth/like/${videoId}`,
+                    `${process.env.REACT_APP_BACKEND_URL}/auth/like/${videoId}`,
                     {}, 
                     {  
                         withCredentials: true, 
@@ -76,7 +76,7 @@ const ShortsFeed = () => {
     try {
         const userId = getTokenFromCookie();
         const response = await axios.patch(
-            `http://localhost:4000/auth/subscribershorts/${videoId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/auth/subscribershorts/${videoId}`,
             { userId }, 
             { 
                 withCredentials: true, 
@@ -96,7 +96,7 @@ const ShortsFeed = () => {
     try {
         const userId = getTokenFromCookie();
         const response = await axios.patch(
-            `http://localhost:4000/auth/subscribeshorts/${videoId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/auth/subscribeshorts/${videoId}`,
             { userId }, 
             { 
                 withCredentials: true, 
@@ -116,7 +116,7 @@ const ShortsFeed = () => {
           try {
               const userId = getTokenFromCookie();
               const response = await axios.get(
-                  `http://localhost:4000/auth/issubscribed/${currentVideoId}`,
+                  `${process.env.REACT_APP_BACKEND_URL}/auth/issubscribed/${currentVideoId}`,
                   {
                       withCredentials: true,
                       headers: {
@@ -136,11 +136,11 @@ const ShortsFeed = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-          const res = await axios.get("http://localhost:4000/api/allshorts");
+          const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/allshorts`);
           if (res.data.success && res.data.videos) {
               setShorts(res.data.videos);
               if (res.data.videos.length > 0) {
-                  setCurrentVideoId(res.data.videos[0]._id); // Set initial video ID
+                  setCurrentVideoId(res.data.videos[0]._id);
               }
           } else {
               throw new Error("Invalid response structure");

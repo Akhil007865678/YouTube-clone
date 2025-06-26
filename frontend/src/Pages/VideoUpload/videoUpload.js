@@ -38,13 +38,14 @@ const VideoUpload = () => {
         formData.append('video', video);
         
         try {
-          const response = await axios.post('http://localhost:4000/api/videoupload', formData, {
+          const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/videoupload`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
             withCredentials: true,
           });
           setMessage(response.data.message);
+          alert("video uploaded successfully");
         } catch (error) {
           setMessage('Error uploading video');
           console.error('Error uploading video:', error);

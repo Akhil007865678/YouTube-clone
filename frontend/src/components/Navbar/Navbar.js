@@ -53,7 +53,7 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/auth/fetchUserData", { withCredentials: true });
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/fetchUserData`, { withCredentials: true });
         setUser(response.data);
         console.log(user.data)
       } catch (error) {
@@ -156,7 +156,7 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
   const handleLogout = async () => {
     setNavbarModal(false);
     try {
-      await axios.post("http://localhost:4000/auth/logout", {}, { withCredentials: true });
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, {}, { withCredentials: true });
       localStorage.removeItem("token");
       setUser(null);
       setuserId(null);

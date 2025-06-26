@@ -17,7 +17,7 @@ const Login = ({ setLoginModal }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/auth/login', loginField);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, loginField);
       if (response.data.success) {
         const { token } = response.data;
         localStorage.setItem('token', response.data.token);

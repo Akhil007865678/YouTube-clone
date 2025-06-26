@@ -49,7 +49,7 @@ const SideNavbar = ({sideNavbar}) => {
     useEffect(() => {
         const subscription = async () => {
           try {
-            const response = await axios.get('http://localhost:4000/auth/subscription', {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/subscription`, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
@@ -117,6 +117,7 @@ const SideNavbar = ({sideNavbar}) => {
             </Link>
         </div>
         <div className='home_sideNavbarMiddle'>
+          <h4>Subscriptions :</h4>
             {channel.length > 0 ? (
             channel.map((channel) => (
                 <Link to={`user/${channel._id}`} className='home_sideNavbarTopOption' style={{ textDecoration: 'none', color: 'inherit' }}>

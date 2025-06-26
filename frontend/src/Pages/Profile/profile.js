@@ -13,7 +13,7 @@ const Profile = ({ sideNavbar }) => {
 
     const fetchVideo = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/userVideo', {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/userVideo`, {
                 withCredentials: true,
             });
             console.log(response.data.user.subscribersCount);

@@ -40,7 +40,7 @@ const Video = () => {
         const token = localStorage.getItem('token');
         try {
             const response = await axios.post(
-                `http://localhost:4000/User-history/add-history/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/User-history/add-history/${id}`,
                 { videoId },
                 {
                     headers: {
@@ -59,7 +59,7 @@ const Video = () => {
         try {
             const userId = getTokenFromCookie();
             const response = await axios.patch(
-                `http://localhost:4000/auth/subscribe/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/subscribe/${id}`,
                 { userId }, 
                 { 
                     withCredentials: true, 
@@ -80,7 +80,7 @@ const Video = () => {
         try {
             const userId = getTokenFromCookie();
             const response = await axios.patch(
-                `http://localhost:4000/auth/subscriber/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/subscriber/${id}`,
                 { userId }, 
                 { 
                     withCredentials: true, 
@@ -98,7 +98,7 @@ const Video = () => {
     };          
 
     const fetchVideoById = async () => {
-        await axios.get(`http://localhost:4000/api/getVideoById/${id}`,).then((response) => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getVideoById/${id}`,).then((response) => {
             setData(response.data.video);
             setUser(response.data.user);
             setVideoUrl(response?.data?.video?.videoLink);
@@ -108,7 +108,7 @@ const Video = () => {
     }
     const addComments = async () => {
         try {
-            await axios.post(`http://localhost:4000/commentApi/comment`,{message, video: id,},
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/commentApi/comment`,{message, video: id,},
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const Video = () => {
     };
     const getComments = async () => {
         try{
-            await axios.get(`http://localhost:4000/commentApi/comment/${id}`).then((response) => {
+            await axios.get(`${process.env.REACT_APP_BACKEND_URL}/commentApi/comment/${id}`).then((response) => {
                 setComments(response.data.comments);
             })
         } catch(error){
@@ -135,7 +135,7 @@ const Video = () => {
     }
     
     const getCommentByVideoId = async () => {
-        await axios.get(`http://localhost:3000/commentApi/comment/${id}`).then((response) => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_URL}/commentApi/comment/${id}`).then((response) => {
             
             setComments(response.data.comments);
         }).catch(error => {
@@ -144,7 +144,7 @@ const Video = () => {
     }
     const getRecommendVideo = async () => {
         try{
-            const res = await axios.get('http://localhost:4000/api/allvideo');
+            const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/allvideo`);
             if (res.data.success && res.data.videos) {
               setVideos(res.data.videos);
             } else {
@@ -160,7 +160,7 @@ const Video = () => {
         try {
             const userId = getTokenFromCookie();
             const response = await axios.get(
-                `http://localhost:4000/auth/issubscribed/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/issubscribed/${id}`,
                 {
                     withCredentials: true,
                     headers: {
@@ -182,7 +182,7 @@ const Video = () => {
         try {
             const userId = getTokenFromCookie();
             const response = await axios.get(
-                `http://localhost:4000/auth/isliked/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/isliked/${id}`,
                 {
                     withCredentials: true,
                     headers: {
@@ -201,7 +201,7 @@ const Video = () => {
 
     const updateLike = async () => {
         try {
-            await axios.patch(`http://localhost:4000/api/likes/${id}`);
+            await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/likes/${id}`);
         } catch (error) {
             console.error('Likes error:', error.response?.data || error.message);
         }
@@ -210,7 +210,7 @@ const Video = () => {
     const addLike = async () => {
         try {
             await axios.patch(
-                `http://localhost:4000/auth/like/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/like/${id}`,
                 {}, 
                 {  
                     withCredentials: true, 
@@ -230,7 +230,7 @@ const Video = () => {
         console.log("User ID:", userId, "Video ID:", id);
         try {
             const response = await axios.post(
-                `http://localhost:4000/auth/savelater/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/auth/savelater/${id}`,
                 { userId },
                 {  
                     withCredentials: true,

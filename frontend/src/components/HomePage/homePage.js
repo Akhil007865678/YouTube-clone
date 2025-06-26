@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './homePage.css';
+import './homePage.Module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ExploreIcon from '@mui/icons-material/Explore';
@@ -13,7 +13,7 @@ const HomePage = ({ sideNavbar }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/allvideo');
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/allvideo`);
         if (res.data.success && res.data.videos) {
           setVideos(res.data.videos);
         } else {
