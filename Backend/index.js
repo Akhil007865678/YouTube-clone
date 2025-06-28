@@ -7,21 +7,15 @@ import history from './routes/history.js';
 import comments from './routes/comments.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-
+dotenv.config();
 app.use(cors({
-    origin: true,
+    origin: 'http://localhost:3000',
     credentials: true
-}));
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -30,14 +24,8 @@ connectDB();
 app.use('/auth', users);
 app.use('/api', videos);
 app.use('/commentApi', comments);
-app.use('/User-history', history);
-
-app.use(express.static(path.join(__dirname, 'frontend', 'build')));
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
-});
+app.use('/User-history', history)
 
 app.listen(PORT, () => {
     console.log(`server is started at port ${PORT}`);
-});
+})
