@@ -14,6 +14,7 @@ const cookieOptions = {
     maxAge: 60 * 60 * 1000 
 };
 
+
 const signUp = async (req, res) => {
   try {
     if (!req.file) {
