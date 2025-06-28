@@ -12,9 +12,10 @@ const Profile = ({ sideNavbar }) => {
 
 
     const fetchVideo = async () => {
+        const token = localStorage.getItem("token");
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/userVideo`, {
-                withCredentials: true,
+                Authorization: `Bearer ${token}`,
             });
             console.log(response.data.user.subscribersCount);
             setUser(response.data.user);
