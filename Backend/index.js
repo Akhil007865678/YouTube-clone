@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors({
-    origin: `${process.env.FRONTEND_URL}`,
+    origin: 'https://host1-q2tj.onrender.com',
     credentials: true
 }));
 app.use(express.json());
