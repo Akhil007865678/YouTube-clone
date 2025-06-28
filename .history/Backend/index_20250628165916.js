@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 dotenv.config();
 app.use(cors({
-    origin: `${process.env.FRONTEND_URL}`,
+    origin: `${}`,
     credentials: true
 }))
 app.use(express.json());
