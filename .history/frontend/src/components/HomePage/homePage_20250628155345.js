@@ -68,7 +68,7 @@ const HomePage = ({ sideNavbar }) => {
                   </div>
                 </div>
               </Link>
-          ))
+          )
         ) : (
           <div>No videos available</div>
         )}

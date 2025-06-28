@@ -43,8 +43,11 @@ const HomePage = ({ sideNavbar }) => {
 
       <div className={sideNavbar ? 'home_mainPage1' : 'fullHome_mainPage1'}>
         {videos.length > 0 ? (
-          videos.map((video) => (
-            <Link key={video._id} to={`/watch/${video._id}`} className="youtube_Video">
+          videos.map((video) => {
+            if (!video.User) return null;
+
+            return (
+              <Link key={video._id} to={`/watch/${video._id}`} className="youtube_Video">
                 <div className="youtube_thumbnailBox">
                   <img
                     src={video.thumbnail || 'https://via.placeholder.com/300x180?text=No+Thumbnail'}
@@ -68,7 +71,8 @@ const HomePage = ({ sideNavbar }) => {
                   </div>
                 </div>
               </Link>
-          ))
+            );
+          })
         ) : (
           <div>No videos available</div>
         )}
