@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const Userauth = async (req, res, next) => {
+    console.log("JWT_SECRET from env:", process.env.JWT_SECRET);
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
