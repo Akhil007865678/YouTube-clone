@@ -36,7 +36,6 @@ const Login = ({ setLoginModal }) => {
   }
 };
 
-
   return (
     <div className='login'>
       <div className='login_card'>
