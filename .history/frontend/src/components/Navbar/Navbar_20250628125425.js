@@ -232,7 +232,7 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
           )}
           {user ? (
             <img 
-              src={user.data.profilePic} 
+              src={user.data.profilePic || 'https://via.placeholder.com/50?text=No+Profile'} 
               alt="Profile" 
               onClick={handleClickModal} 
               className="profile-img"
