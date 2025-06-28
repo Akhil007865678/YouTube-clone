@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 dotenv.config();
 app.use(cors({
-    origin: ["http://localhost:3000", "https://your-frontend.onrender.com"],
+    origin: ["http://localhost:3000", "https://youtube-clone-vtq3.onrender.com"],
     credentials: true
 }))
 app.use(express.json());
