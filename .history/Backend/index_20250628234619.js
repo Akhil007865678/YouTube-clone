@@ -7,12 +7,15 @@ import history from './routes/history.js';
 import comments from './routes/comments.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
+
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 dotenv.config();
 
 app.set('trust proxy', 1);
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true
@@ -25,8 +28,10 @@ connectDB();
 app.use('/auth', users);
 app.use('/api', videos);
 app.use('/commentApi', comments);
-app.use('/User-history', history)
-
+app.use('/User-history', history);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
 app.listen(PORT, () => {
     console.log(`server is started at port ${PORT}`);
 })

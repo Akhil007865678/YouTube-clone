@@ -7,6 +7,8 @@ import history from './routes/history.js';
 import comments from './routes/comments.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
+
 
 const PORT = process.env.PORT || 3000;
 const app = express();
