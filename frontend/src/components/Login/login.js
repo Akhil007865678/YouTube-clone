@@ -17,13 +17,14 @@ const Login = ({ setLoginModal }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, loginField);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
+        loginField,
+        { withCredentials: true }
+      );
+      
       if (response.data.success) {
-        const { token } = response.data;
-        localStorage.setItem('token', response.data.token);
-        
-        setLoginModal()
-        document.cookie = `token=${token}; path=/`;
+        setLoginModal();
         navigate('/');
         window.location.reload();
       } else {
