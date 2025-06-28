@@ -44,6 +44,7 @@ const HomePage = ({ sideNavbar }) => {
       <div className={sideNavbar ? 'home_mainPage1' : 'fullHome_mainPage1'}>
         {videos.length > 0 ? (
           videos.map((video) => {
+            // ✅ Skip if video.User is undefined to prevent crash
             if (!video.User) return null;
 
             return (
