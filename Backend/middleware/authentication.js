@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const auth = async (req, res, next) => {
+    console.log("JWT_SECRET from env:", process.env.JWT_SECRET);
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({ error: 'No token, authorization denied' });
