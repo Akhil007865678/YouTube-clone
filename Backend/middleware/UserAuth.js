@@ -8,7 +8,7 @@ const Userauth = async (req, res, next) => {
             return res.status(401).json({ error: 'No token, authorization denied' });
         }
         const token = authHeader.split(' ')[1];
-        const decode = jwt.verify(token, "key");
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decode.userId).select('-password');
         if (!user) return res.status(401).json({ error: 'User does not exist' });
         req.user = user;
