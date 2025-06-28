@@ -15,25 +15,27 @@ const Login = ({ setLoginModal }) => {
     });
   };
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, loginField);
-      if (response.data.success) {
-        const { token } = response.data;
-        localStorage.setItem('token', response.data.token);
-        
-        setLoginModal()
-        document.cookie = `token=${token}; path=/`;
-        navigate('/');
-        window.location.reload();
-      } else {
-        setError("Invalid Credentials");
-      }
-    } catch (err) {
-      setError("Oops something went wrong, Try again");
-      console.log(err);
+ const handleLogin = async () => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
+      loginField,
+      { withCredentials: true }
+    );
+
+    if (response.data.success) {
+      setLoginModal();
+      navigate('/');
+      window.location.reload();
+    } else {
+      setError("Invalid Credentials");
     }
-  };
+  } catch (err) {
+    setError("Oops something went wrong, Try again");
+    console.log(err);
+  }
+};
+
 
   return (
     <div className='login'>
