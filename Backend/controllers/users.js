@@ -9,8 +9,9 @@ import Shorts from '../models/shorts.js';
 
 const cookieOptions = {
     httpOnly: true,
-    secure: false,
-    sameSite: 'Lax'
+    secure: true,
+    sameSite: 'None',  
+    maxAge: 60 * 60 * 1000 
 };
 
 const signUp = async (req, res) => {
