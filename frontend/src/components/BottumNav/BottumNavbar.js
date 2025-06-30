@@ -9,8 +9,8 @@ const BottomNavbar = () => {
 
   return (
     <div className="bottom-navbar">
-      <div className="nav-icon" onClick={() => navigate('/')}>
-        <PlayCircleIcon onClick={() => navigate('/shorts')} />
+      <div className="nav-icon" onClick={() => navigate('/shorts')}>
+        <PlayCircleIcon />
       </div>
     </div>
   );
