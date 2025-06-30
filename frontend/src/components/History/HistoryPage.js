@@ -15,13 +15,11 @@ const History = (sideNavbar) => {
       }
       return null;
     };
-    const getToken = () => {
-      return localStorage.getItem('token');
-    };
+    
     useEffect(() => {
         const fetchHistory = async () => {
             try {
-              const userId = getToken();
+              const userId = getTokenFromCookie();
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/User-history/fetch-history`, {
                   withCredentials: true,
                   headers: {
