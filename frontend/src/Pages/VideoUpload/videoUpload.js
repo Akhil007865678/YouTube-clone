@@ -66,6 +66,7 @@ const VideoUpload = () => {
                         Upload Video
                     </div>
                     <div className='uploadForm'>
+                        <p>Video and thumbnail size must be less then 2mb</p>
                         <input
                             type='text'
                             placeholder='Title of video'
