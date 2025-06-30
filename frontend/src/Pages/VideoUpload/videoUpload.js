@@ -3,6 +3,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './videoUpload.css';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 
 const VideoUpload = () => {
     const navigate = useNavigate();
@@ -12,6 +14,7 @@ const VideoUpload = () => {
     const [thumbnail, setThumbnail] = useState(null);
     const [video, setVideo] = useState(null);
     const [message, setMessage] = useState('');
+    const [progressBar, setProgressBar] = useState(false);
 
     const handleImageChange = (e) => {
         setThumbnail(e.target.files[0]);
@@ -38,13 +41,15 @@ const VideoUpload = () => {
         formData.append('video', video);
         
         try {
-          const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/videoupload`, formData, {
+            setProgressBar(true);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/videoupload`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
             withCredentials: true,
           });
           setMessage(response.data.message);
+          setProgressBar(false);
           alert("video uploaded successfully");
         } catch (error) {
           setMessage('Error uploading video');
@@ -103,8 +108,10 @@ const VideoUpload = () => {
                         <div className='uploadBtn_form' onClick={handleSubmit}>Upload</div>
                         <div className='uploadBtn_form' onClick={() => navigate('/')}>Home</div>
                     </div>
+                    {progressBar && <Box sx={{ width: '100%' }}><LinearProgress/></Box>}
                 </div>
                 {message && <p>{message}</p>}
+                
             </div>
         </div>
     );

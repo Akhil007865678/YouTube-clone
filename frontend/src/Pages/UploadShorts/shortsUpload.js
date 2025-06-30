@@ -3,6 +3,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './shortsUpload.css';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 
 const ShortsUpload = () => {
     const navigate = useNavigate();
@@ -12,7 +14,8 @@ const ShortsUpload = () => {
     const [thumbnail, setThumbnail] = useState(null);
     const [video, setVideo] = useState(null);
     const [message, setMessage] = useState('');
-    const [isValidVideo, setIsValidVideo] = useState(false); // Track if video is valid
+    const [isValidVideo, setIsValidVideo] = useState(false);
+    const [progressBar, setProgressBar] = useState(false);
 
     const handleImageChange = (e) => {
         setThumbnail(e.target.files[0]);
@@ -26,7 +29,7 @@ const ShortsUpload = () => {
             
             videoElement.onloadedmetadata = () => {
                 window.URL.revokeObjectURL(videoElement.src);
-                if (videoElement.duration > 60) { // 60 seconds = 1 minutes
+                if (videoElement.duration > 60) { 
                     setMessage("Video must be shorter than 2 minutes.");
                     setIsValidVideo(false);
                 } else {
@@ -61,6 +64,7 @@ const ShortsUpload = () => {
         formData.append('video', video);
         
         try {
+            setProgressBar(true);
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/shortsupload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -68,6 +72,7 @@ const ShortsUpload = () => {
                 withCredentials: true,
             });
             setMessage(response.data.message);
+            setProgressBar(false);
             alert("Shorts uploaded successfully");
         } catch (error) {
             setMessage('Error uploading video');
@@ -128,8 +133,10 @@ const ShortsUpload = () => {
                         </div>
                         <div className='uploadBtn_form' onClick={() => navigate('/')}>Home</div>
                     </div>
+                    {progressBar && <Box sx={{ width: '100%' }}><LinearProgress/></Box>}
                 </div>
                 {message && <p>{message}</p>}
+                
             </div>
         </div>
     );

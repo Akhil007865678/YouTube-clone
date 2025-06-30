@@ -1,4 +1,4 @@
-.video{
+.video3{
     margin-top: 56px;
     display: flex;
     padding: 30px 0;
@@ -235,8 +235,9 @@
 
 
 @media (max-width: 576px){
-    .video{
-        margin-top: 56px;
+    .video3{
+        margin-top: 6px;
+        margin-right: 0px;
         display: flex;
         flex-direction: column;
         padding: 30px 0;

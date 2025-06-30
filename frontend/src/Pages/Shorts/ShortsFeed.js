@@ -7,14 +7,17 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import "./shortsfeed.css";
 import { useParams } from "react-router-dom";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'; 
+import CommentShorts from "../../components/Comments/Comments";
 
 const ShortsFeed = () => {
-  const { id } = useParams(); // Get video ID from URL (if available)
+  const { id } = useParams();
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [currentVideoId, setCurrentVideoId] = useState(null);
   const [shorts, setShorts] = useState([]);
   const videoRefs = useRef({});
   const [isLiked, setIsLIked] = useState(false);
+  const [box, setBox] = useState(false);
+  const [Id, setId] = useState(null);
 
   const getTokenFromCookie = () => {
     const cookies = document.cookie;
@@ -185,6 +188,29 @@ useEffect(() => {
   return () => observer.disconnect();
 }, [shorts]);
 
+const handleShare = (videoId) => {
+  const videoLink = `${window.location.origin}/shorts/${videoId}`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Check out this short!",
+      text: "Watch this amazing short video:",
+      url: videoLink,
+    })
+    .then(() => console.log("Shared successfully"))
+    .catch((error) => console.error("Share failed:", error));
+  } else {
+    navigator.clipboard.writeText(videoLink)
+      .then(() => alert("Link copied to clipboard!"))
+      .catch(() => alert("Failed to copy link."));
+  }
+};
+
+const handleCommentClick = (videoId) => {
+    setId(videoId);
+    setBox(true);
+  };
+
   return (
     <div className="shorts-feed">
       {shorts.map((short) => (
@@ -222,11 +248,12 @@ useEffect(() => {
             } 
             <p>{short.like}</p>
             </div>
-            <CommentBankRoundedIcon />
-            <SendOutlinedIcon />
+            <CommentBankRoundedIcon onClick={() => handleCommentClick(short._id)} style={{ cursor: 'pointer', fontSize: '30px' }}/>
+            <SendOutlinedIcon onClick={() => handleShare(short._id)} style={{ cursor: 'pointer', fontSize: '30px' }} />
           </div>
         </motion.div>
       ))}
+      {box && <CommentShorts setBox={setBox} videoId={Id} />}
     </div>
   );
 };

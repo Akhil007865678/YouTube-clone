@@ -3,10 +3,13 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import './login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 
 const Login = ({ setLoginModal }) => {
   const [loginField, setLoginField] = useState({ userName: "", password: "" });
   const [error, setError] = useState("");
+  const [progressBar, setProgressBar] = useState(false);
   const navigate = useNavigate();
 
   const handleOnChangeInput = (event, name) => {
@@ -17,6 +20,7 @@ const Login = ({ setLoginModal }) => {
 
  const handleLogin = async () => {
   try {
+    setProgressBar(true);
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
       loginField,
@@ -30,6 +34,7 @@ const Login = ({ setLoginModal }) => {
     } else {
       setError("Invalid Credentials");
     }
+    setProgressBar(false);
   } catch (err) {
     setError("Oops something went wrong, Try again");
     console.log(err);
@@ -57,6 +62,7 @@ const Login = ({ setLoginModal }) => {
             <Link to={'/signup'} onClick={() => setLoginModal()} className='login-btn'> SignUp </Link>
             <div className='login-btn' onClick={() => setLoginModal()}> Cancel </div>
         </div>
+        {progressBar && <Box sx={{ width: '100%' }}><LinearProgress/></Box>}
       </div>
     </div>
   );

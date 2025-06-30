@@ -127,6 +127,8 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
       navigate('/23/upload');
     } else if(value === 'Upload Shorts'){
       navigate('/uplaodshorts');
+    } else if(value === 'subscriptions'){ 
+      navigate('/subscriptions');
     }
   }
   const onSearch = (e) => {
@@ -243,14 +245,21 @@ const Navbar = ({setSideNavbarFun, sideNavbar}) => {
           { navbarModal &&
             <div className='navbar-modal'>
             <div className='navbar-modal-option' onClick={navigateToProfile}>Profile</div>
-            <div className='navbar-modal-option' onClick={() => onClickofPopUpOption("login")}>Login</div>
-            <div className='navbar-modal-option' onClick={() => handleLogout()}>Logout</div>
+            {!user && (
+              <>
+                <div className='navbar-modal-option' onClick={() => onClickofPopUpOption("login")}>Login</div>
+                <div className='navbar-modal-option' onClick={() => navigate('/signup')}>SignUp</div>
+              </>
+            )}
+            {user && (
+              <div className='navbar-modal-option' onClick={handleLogout}>Logout</div>
+            )}
           </div>
           }
           { navbarModal1 &&
           <div className='navbar-modal1'>
             <div onClick={() => handleClickModal2('shorts')} className='navbar-modal-option'>Shorts</div>
-            <div onClick={() => handleClickModal2('')} className='navbar-modal-option'>Subscriptions</div>
+            <div onClick={() => handleClickModal2('subscriptions')} className='navbar-modal-option'>Subscriptions</div>
             <div onClick={() => handleClickModal2('History')} className='navbar-modal-option'>History</div>
             <div onClick={() => handleClickModal2('uservideo')} className='navbar-modal-option'>Your videos</div>
             <div onClick={() => handleClickModal2('Liked videos')} className='navbar-modal-option'>Liked videos</div>

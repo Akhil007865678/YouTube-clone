@@ -7,6 +7,7 @@ import {useNavigate, useParams, Link} from 'react-router-dom';
 import axios from 'axios';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import CommentShorts from '../../components/Comments/Comments';
 
 const Video = () => {
     const [message, setMessage] = useState("");
@@ -20,6 +21,7 @@ const Video = () => {
     const [isLiked, setIsLIked] = useState(false);
     const navigate = useNavigate();
     const [showComments, setShowComments] = useState(false);
+    const [box, setBox] = useState(false);
 
     const handleToggleComments = () => {
       setShowComments(prev => !prev);
@@ -267,7 +269,8 @@ const Video = () => {
     
 
   return (
-    <div className='video'>
+    <>
+    <div className='video3'>
       <div className='videoPostSection'>
         <div className='video_youtube'>
             {data && <video width="400" controls autoPlay className='video_youtube_video'>
@@ -328,7 +331,7 @@ const Video = () => {
                         </div>
                     </div>
                 </div>
-                <div className='showcomments' onClick={handleToggleComments}>Comments <ArrowDropDownIcon/></div>
+                <div className='showcomments' onClick={handleToggleComments}>Comments <ArrowDropDownIcon onClick={() => setBox(true)} style={{ cursor: 'pointer', fontSize: '30px' }}/></div>
                 {showComments && (
                   <div className='youtubeOtherComment1'>
                   {
@@ -378,6 +381,8 @@ const Video = () => {
             )}
       </div>
     </div>
+    {box && <CommentShorts setBox={setBox} videoId={id} />}
+    </>
   )
 }
 
