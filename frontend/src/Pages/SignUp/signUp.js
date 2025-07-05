@@ -59,6 +59,7 @@ const SignUp = () => {
                     SignUp
                 </div>
                 <form className='signUp_Inputs' action='/auth/signup' method="POST" encType='multipart/form-data'>
+                    <p>Image size must be less then 2mb</p>
                     <input type='text' className='signUp_Inputs_inp' value={channelName} onChange={(e) => setchannelName(e.target.value)} placeholder='Channel Name' />
                     <input type='text' className='signUp_Inputs_inp' value={userName} onChange={(e) => setuserName(e.target.value)} placeholder='User Name' />
                     <input type='password' className='signUp_Inputs_inp' value={password} onChange={(e) => setpassword(e.target.value)} placeholder='Password' />
