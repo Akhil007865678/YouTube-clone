@@ -20,18 +20,24 @@ import React, { useEffect, useState } from 'react';
 import SideNavbar from '../../components/SideNavbar/sideNavbar';
 import HomePage from '../../components/HomePage/homePage';
 import BottomNavbar from '../../components/BottumNav/BottumNavbar';
-import './home .css';
+import './home.css';
 
 const Home = ({ sideNavbar }) => {
   const [backendReady, setBackendReady] = useState(false);
 
   useEffect(() => {
-    const checkBackend = () => {
-      fetch('https://youtube-clone-cuxp.onrender.com') // hit root or any lightweight endpoint
-        .then((res) => {
-          if (res.ok) setBackendReady(true);
-        })
-        .catch(() => setBackendReady(false));
+    // Function to check if backend is responding
+    const checkBackend = async () => {
+      try {
+        const res = await fetch('https://youtube-clone-cuxp.onrender.com'); // can be root or /api/health
+        if (res.ok) {
+          setBackendReady(true); // Backend is running, remove message
+        } else {
+          setBackendReady(false); // Backend not ready yet
+        }
+      } catch (err) {
+        setBackendReady(false); // Backend still sleeping
+      }
     };
 
     // Initial check
@@ -47,6 +53,7 @@ const Home = ({ sideNavbar }) => {
 
   return (
     <div className="home">
+      {/* Show message only when backend is not ready */}
       {!backendReady && (
         <div className="backend-message">
           <h2>Backend is waking up...</h2>
@@ -54,7 +61,7 @@ const Home = ({ sideNavbar }) => {
         </div>
       )}
 
-      {/* Normal homepage components */}
+      {/* Normal homepage */}
       <SideNavbar sideNavbar={sideNavbar} />
       <HomePage sideNavbar={sideNavbar} />
       <BottomNavbar />
@@ -62,4 +69,5 @@ const Home = ({ sideNavbar }) => {
   );
 };
 
+export default Home;
 export default Home;
