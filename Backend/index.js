@@ -14,7 +14,7 @@ dotenv.config();
 
 app.set('trust proxy', 1);
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || "https://you-tube-clone-kappa-two.vercel.app",
   credentials: true
 }));
 app.use(express.json());
