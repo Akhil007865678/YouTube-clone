@@ -19,7 +19,7 @@ export default home;
 import React from 'react';
 import SideNavbar from '../../components/SideNavbar/sideNavbar';
 import HomePage from '../../components/HomePage/homePage';
-import './home.css';
+import './home .css';
 import BottomNavbar from '../../components/BottumNav/BottumNavbar';
 
 const Home = ({ sideNavbar }) => {
