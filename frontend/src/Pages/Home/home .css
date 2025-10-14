@@ -13,8 +13,48 @@
   background: #fff3cd;
   color: #856404;
   text-align: center;
-  padding: 15px;
+  padding: 15px 50px 15px 15px;
   border-bottom: 1px solid #ffeeba;
   z-index: 1000;
   font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+.backend-message h2 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+}
+
+.backend-message p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Cross button */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #856404;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+/* Mobile friendly */
+@media (max-width: 768px) {
+  .backend-message {
+    padding: 15px 40px 15px 15px;
+    font-size: 14px;
+  }
+
+  .close-btn {
+    font-size: 18px;
+    top: 5px;
+    right: 10px;
+  }
 }
