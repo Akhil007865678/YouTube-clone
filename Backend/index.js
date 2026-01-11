@@ -25,7 +25,11 @@ connectDB();
 app.use('/auth', users);
 app.use('/api', videos);
 app.use('/commentApi', comments);
-app.use('/User-history', history)
+app.use('/User-history', history);
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 
 app.listen(PORT, () => {
     console.log(`server is started at port ${PORT}`);
