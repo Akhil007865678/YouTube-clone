@@ -1,4 +1,4 @@
-/*import React from 'react'
+import React from 'react'
 import SideNavbar from '../../components/SideNavbar/sideNavbar';
 import HomePage from '../../components/HomePage/homePage';
 import './home .css';
@@ -15,8 +15,8 @@ const home = ({sideNavbar}) => {
 }
 
 export default home;
-*/
 
+/*
 import React, { useEffect, useState } from 'react';
 import SideNavbar from '../../components/SideNavbar/sideNavbar';
 import HomePage from '../../components/HomePage/homePage';
@@ -59,11 +59,11 @@ const Home = ({ sideNavbar }) => {
       )}
 
       {/* Normal homepage */}
-      <SideNavbar sideNavbar={sideNavbar} />
-      <HomePage sideNavbar={sideNavbar} />
-      <BottomNavbar />
-    </div>
-  );
-};
-
+ //     <SideNavbar sideNavbar={sideNavbar} />
+   //   <HomePage sideNavbar={sideNavbar} />
+     // <BottomNavbar />
+    //</div>
+  //);
+//};
+*/
 export default Home;
