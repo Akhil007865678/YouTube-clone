@@ -47,22 +47,29 @@ const SideNavbar = ({sideNavbar}) => {
     }, []);
   
     useEffect(() => {
-        const subscription = async () => {
-          try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/subscription`, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userId}`,
-                },
-            });
-            setChannel(response.data.channels);
-          } catch (error) {
-            console.error('Failed to fetch liked videos:', error);
-          }
-        };
-        subscription();
-      }, []);
+      if (!userId) return;
+    
+      const subscription = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/auth/subscription`,
+            {
+              withCredentials: true,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userId}`,
+              },
+            }
+          );
+    
+          setChannel(response.data.channels);
+        } catch (error) {
+          console.error('Failed to fetch liked videos:', error);
+        }
+      };
+    
+      subscription();
+    }, [userId]);
 
   return (
     <div>
